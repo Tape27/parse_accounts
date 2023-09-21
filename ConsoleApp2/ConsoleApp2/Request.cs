@@ -38,6 +38,8 @@ namespace ConsoleApp2
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 var reader = new StreamReader(response.GetResponseStream());
                 var html = reader.ReadToEnd();
+
+                await TelegramNotifications.SendError(html);
                 return html;
             }
             catch (Exception ex) { await TelegramNotifications.SendError("Ошибка в методе MarketRequest  " + ex.ToString()); return null; }
