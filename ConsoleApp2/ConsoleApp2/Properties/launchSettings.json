@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "ConsoleApp2": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Program Files\\Docker"
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    },
+    "Профиль 1": {
+      "commandName": "Project"
+    }
+  }
+}
