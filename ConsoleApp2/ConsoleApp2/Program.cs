@@ -46,6 +46,8 @@ namespace ConsoleApp2
                     }
                     
                 }
+
+                await TelegramNotifications.SendAccount(0, 0);
                 
             }
             
