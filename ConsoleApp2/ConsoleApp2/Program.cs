@@ -24,10 +24,10 @@ namespace ConsoleApp2
             bool loadbase = false;
             ParsingLolzHtml parsing = new ParsingLolzHtml();
 
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < 100000000; i++)
             {
                 Console.WriteLine(i);
-                //Thread.Sleep(10000);
+                Thread.Sleep(10000);
 
                 string s = await Request.MarketRequest();
                 System.IO.File.WriteAllText(path + "\\data.txt", s);

@@ -14,8 +14,8 @@ namespace ConsoleApp2
             int count_accounts = 0;
             int count = System.IO.File.ReadAllLines(path).Length;
             string[] worst_stroki = new string[count];
-            string[] id_accounts = new string[40];
-            string[] price_accounts = new string[40];
+            string[] id_accounts = new string[37];
+            string[] price_accounts = new string[37];
 
             using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default)) // получаем грязные строки с id товара
             {
@@ -28,7 +28,7 @@ namespace ConsoleApp2
                         id_accounts[count_accounts] = worst_stroki[i - 16];
                         price_accounts[count_accounts] = worst_stroki[i - 10];
                         count_accounts++;
-                        if (count_accounts > 40) { break; }
+                        if (count_accounts > id_accounts.Length) { break; }
                     }
                 }
 
@@ -39,7 +39,7 @@ namespace ConsoleApp2
 
             Dictionary<int, int> accounts = new Dictionary<int, int>();
 
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < id_accounts.Length; i++)
             {
                 accounts.Add(Convert.ToInt32(id_accounts[i]), Convert.ToInt32(price_accounts[i]));
             }
@@ -52,7 +52,7 @@ namespace ConsoleApp2
         {
             string s = string.Empty;
 
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < price_accounts.Length; i++)
             {
                 s = price_accounts[i];
                 price_accounts[i] = string.Empty;
@@ -76,7 +76,7 @@ namespace ConsoleApp2
             {
                 string s = string.Empty;
 
-                for (int i = 0; i < 40; i++)
+                for (int i = 0; i < id_accounts.Length; i++)
                 {
                     s = id_accounts[i];
                     id_accounts[i] = string.Empty;
