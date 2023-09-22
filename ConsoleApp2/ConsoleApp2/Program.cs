@@ -27,7 +27,7 @@ namespace ConsoleApp2
             for (int i = 0; i < 10000; i++)
             {
                 Console.WriteLine(i);
-                Thread.Sleep(10000);
+                //Thread.Sleep(10000);
 
                 string s = await Request.MarketRequest();
                 System.IO.File.WriteAllText(path + "\\data.txt", s);
