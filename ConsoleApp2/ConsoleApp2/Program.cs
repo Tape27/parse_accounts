@@ -27,7 +27,7 @@ namespace ConsoleApp2
             for (int i = 0; i < 100000000; i++)
             {
                 Console.WriteLine(i);
-                Thread.Sleep(10000);
+                Thread.Sleep(8000);
 
                 string s = await Request.MarketRequest();
                 System.IO.File.WriteAllText(path + "\\data.txt", s);
@@ -46,8 +46,6 @@ namespace ConsoleApp2
                     }
                     
                 }
-
-                await TelegramNotifications.SendAccount(0, 0);
                 
             }
             
