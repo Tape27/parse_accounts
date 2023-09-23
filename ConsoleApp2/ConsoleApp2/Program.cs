@@ -10,14 +10,12 @@ namespace ConsoleApp2
     internal class Program
     {
         public static string path = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-        public static int[] id_acc = new int[40];
 
         public static Dictionary<int, int> load_accounts = new Dictionary<int, int>();
         
-        public static void Main()
+        public static async Task Main()
         {
-            Start();
-            Console.ReadLine();
+            await Start();
         }
         public static async Task Start()
         {
@@ -35,7 +33,6 @@ namespace ConsoleApp2
                 Console.WriteLine(3);
                 Dictionary<int, int> accounts = parsing.GetAccounts(path + "\\data.txt");
 
-                int x = 0;
                 foreach (var account in accounts)
                 {
                     if(loadbase == false) { load_accounts = accounts; loadbase = true; break; }
@@ -44,35 +41,11 @@ namespace ConsoleApp2
                     { 
                         load_accounts.Add(account.Key, account.Value); 
                         await TelegramNotifications.SendAccount(account.Key, account.Value);
-                    }
-                    
+                    }                 
                 }
-                
+                await TelegramNotifications.SendAccount(0, 0);
             }
             
-        }
-
-        public static async Task StartMonitoring()
-        {
-            ParsingLolzHtml parsing = new ParsingLolzHtml();
-
-
-            string s = await Request.MarketRequest();
-            System.IO.File.WriteAllText(path, s);
-
-            Dictionary<int, int> accounts = parsing.GetAccounts(path);
-
-            int x = 0;
-            foreach (var account in accounts)
-            {
-                if (id_acc[x] != account.Key)
-                {
-                    await TelegramNotifications.SendAccount(account.Key, account.Value);
-                }
-
-                id_acc[x] = account.Key;
-                x++;
-            }
         }
 
     }

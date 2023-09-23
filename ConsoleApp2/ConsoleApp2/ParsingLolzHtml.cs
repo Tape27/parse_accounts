@@ -28,7 +28,7 @@ namespace ConsoleApp2
                         id_accounts[count_accounts] = worst_stroki[i - 16];
                         price_accounts[count_accounts] = worst_stroki[i - 10];
                         count_accounts++;
-                        if (count_accounts > id_accounts.Length) { break; }
+                        if (count_accounts > id_accounts.Length - 1) { break; }
                     }
                 }
 
