@@ -28,10 +28,11 @@ namespace ConsoleApp2
             {
                 Console.WriteLine(i);
                 Thread.Sleep(8000);
-
+                Console.WriteLine(1);
                 string s = await Request.MarketRequest();
+                Console.WriteLine(2);
                 System.IO.File.WriteAllText(path + "\\data.txt", s);
-
+                Console.WriteLine(3);
                 Dictionary<int, int> accounts = parsing.GetAccounts(path + "\\data.txt");
 
                 int x = 0;
