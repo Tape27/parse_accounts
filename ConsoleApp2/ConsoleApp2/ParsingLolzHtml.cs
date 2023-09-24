@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System.Diagnostics;
 
 namespace ConsoleApp2
 {
@@ -31,7 +28,6 @@ namespace ConsoleApp2
                         if (count_accounts > id_accounts.Length - 1) { break; }
                     }
                 }
-
             }
 
             id_accounts = ParseIdAcccounts(id_accounts);
@@ -50,15 +46,18 @@ namespace ConsoleApp2
 
         private string[] ParsePriceAccounts(string[] price_accounts)
         {
-            string s = string.Empty;
+            string temp = string.Empty;
 
             for (int i = 0; i < price_accounts.Length; i++)
             {
-                s = price_accounts[i];
+                temp = price_accounts[i];
                 price_accounts[i] = string.Empty;
-                for (int x = 1; x <= 3; x++)
+                for (int x = 1; x <= 10; x++)
                 {
-                    price_accounts[i] += s[s.Length - x - 7];
+                    if (temp[temp.Length - x - 7] == ' ') { continue; }
+                    if (temp[temp.Length - x - 7] == '>') { break; }
+                    price_accounts[i] += temp[temp.Length - x - 7];
+                    
 
                 }
 
@@ -74,16 +73,16 @@ namespace ConsoleApp2
         {
             try
             {
-                string s = string.Empty;
+                string temp = string.Empty;
 
                 for (int i = 0; i < id_accounts.Length; i++)
                 {
-                    s = id_accounts[i];
+                    temp = id_accounts[i];
                     id_accounts[i] = string.Empty;
+
                     for (int x = 1; x <= 8; x++)
                     {
-                        id_accounts[i] += s[s.Length - x - 1];
-
+                        id_accounts[i] += temp[temp.Length - x - 1];
                     }
 
                     char[] chars = id_accounts[i].ToCharArray();

@@ -1,9 +1,4 @@
-﻿using System.Net.Http.Headers;
-using System.Net.Http;
-using System.Net;
-using System.Xml.Linq;
-using static System.Net.Mime.MediaTypeNames;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace ConsoleApp2
 {
@@ -21,16 +16,17 @@ namespace ConsoleApp2
         {
             bool loadbase = false;
             ParsingLolzHtml parsing = new ParsingLolzHtml();
+            TelegramNotifications tg = new TelegramNotifications(400);
 
             for (int i = 0; i < 100000000; i++)
             {
                 Console.WriteLine(i);
-                Thread.Sleep(8000);
-                Console.WriteLine(1);
-                string s = await Request.MarketRequest();
-                Console.WriteLine(2);
-                System.IO.File.WriteAllText(path + "\\data.txt", s);
-                Console.WriteLine(3);
+
+                string html = await Request.MarketRequest();
+                if (html == null) { continue; }
+
+                System.IO.File.WriteAllText(path + "\\data.txt", html);
+
                 Dictionary<int, int> accounts = parsing.GetAccounts(path + "\\data.txt");
 
                 foreach (var account in accounts)
@@ -40,8 +36,8 @@ namespace ConsoleApp2
                     if(!load_accounts.ContainsKey(account.Key)) 
                     { 
                         load_accounts.Add(account.Key, account.Value); 
-                        await TelegramNotifications.SendAccount(account.Key, account.Value);
-                    }                 
+                        await tg.SendAccount(account.Key, account.Value);
+                    }
                 }
             }
             
