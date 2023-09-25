@@ -5,9 +5,11 @@ namespace ConsoleApp2
 {
     internal class Request
     {
+
         static HttpClientHandler httpClientHandler = new HttpClientHandler();
         public static async Task<string> MarketRequest()
         {
+            TelegramNotifications tg = new TelegramNotifications();
             try
             {
                 SetProxy();
@@ -32,12 +34,13 @@ namespace ConsoleApp2
 
                 var request = await client.GetAsync(url);
                 var response = await request.Content.ReadAsStringAsync();
+                
                 return response.ToString();
-
+                
             }
-            catch (Exception ex) { await TelegramNotifications.SendError("Ошибка в методе MarketRequest  " + ex.Message); await MarketRequest(); }
+            catch (Exception ex) { LogError.WriteLog("Ошибка в методе MarketRequest  " + ex.Message); await MarketRequest(); return null; }
 
-            return null;
+            
 
         }
 

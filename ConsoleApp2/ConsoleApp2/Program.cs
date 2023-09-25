@@ -7,20 +7,22 @@ namespace ConsoleApp2
         public static string path = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
         public static Dictionary<int, int> load_accounts = new Dictionary<int, int>();
-        
+
         public static async Task Main()
         {
             await Start();
         }
         public static async Task Start()
         {
+            int countIterations = 0;
             bool loadbase = false;
             ParsingLolzHtml parsing = new ParsingLolzHtml();
             TelegramNotifications tg = new TelegramNotifications(400);
 
-            for (int i = 0; i < 100000000; i++)
+            while (true)
             {
-                Console.WriteLine(i);
+                countIterations++;
+                Console.WriteLine(DateTime.Now + ":  " +countIterations);
 
                 string html = await Request.MarketRequest();
                 if (html == null) { continue; }
@@ -31,16 +33,17 @@ namespace ConsoleApp2
 
                 foreach (var account in accounts)
                 {
-                    if(loadbase == false) { load_accounts = accounts; loadbase = true; break; }
+                    if (loadbase == false) { load_accounts = accounts; loadbase = true; break; }
 
-                    if(!load_accounts.ContainsKey(account.Key)) 
-                    { 
-                        load_accounts.Add(account.Key, account.Value); 
+                    if (!load_accounts.ContainsKey(account.Key))
+                    {
+                        load_accounts.Add(account.Key, account.Value);
                         await tg.SendAccount(account.Key, account.Value);
                     }
                 }
+                if (countIterations == 1) { await tg.SendError("Начал работу!"); }
             }
-            
+
         }
 
     }

@@ -45,11 +45,11 @@ namespace ConsoleApp2
             catch (Exception ex) { LogError.WriteLog("Не смог отправить сообщение в телеграм, повторная отправка " + ex.Message); await SendAccount(id, price); }
 
         }
-        public static async Task SendError(string error)
+        public async Task SendError(string error)
         {
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create($"https://api.telegram.org/bot{token}/sendMessage?text=ALARM!!!!   {error}$&chat_id=620080242");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create($"https://api.telegram.org/bot{token}/sendMessage?text=ALARM!! {error}&chat_id=620080242");
                 request.Method = "GET";
                 request.Headers.Add("sec-ch-ua: \"Chromium\";v=\"116\", \"Not)A;Brand\";v=\"24\", \"Google Chrome\";v=\"116\"");
                 request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7";

@@ -5,14 +5,15 @@ namespace ConsoleApp2
 {
     internal class ParsingLolzHtml
     {
+        TelegramNotifications tg = new TelegramNotifications();
         public Dictionary<int,int> GetAccounts(string path)
         {
 
             int count_accounts = 0;
             int count = System.IO.File.ReadAllLines(path).Length;
             string[] worst_stroki = new string[count];
-            string[] id_accounts = new string[37];
-            string[] price_accounts = new string[37];
+            string[] id_accounts = new string[0];
+            string[] price_accounts = new string[0];
 
             using (StreamReader sr = new StreamReader(path, System.Text.Encoding.Default)) // получаем грязные строки с id товара
             {
@@ -22,10 +23,12 @@ namespace ConsoleApp2
 
                     if (worst_stroki[i] == "\t<div class=\"marketIndexItem--topContainer\">")
                     {
-                        id_accounts[count_accounts] = worst_stroki[i - 16];
-                        price_accounts[count_accounts] = worst_stroki[i - 10];
                         count_accounts++;
-                        if (count_accounts > id_accounts.Length - 1) { break; }
+                        Array.Resize(ref id_accounts, count_accounts);
+                        Array.Resize(ref price_accounts, count_accounts);
+                        id_accounts[count_accounts - 1] = worst_stroki[i - 16];
+                        price_accounts[count_accounts - 1] = worst_stroki[i - 10];
+                        
                     }
                 }
             }
@@ -90,7 +93,7 @@ namespace ConsoleApp2
                     id_accounts[i] = new string(chars);
                 }
             }
-            catch (Exception ex) { TelegramNotifications.SendError("Ошибка в методе ParseIdAccounts  " + ex.ToString()); }
+            catch (Exception ex) { tg.SendError("Ошибка в методе ParseIdAccounts  " + ex.ToString()); }
 
 
             return id_accounts;
