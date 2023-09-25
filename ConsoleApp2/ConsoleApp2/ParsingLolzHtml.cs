@@ -26,7 +26,7 @@ namespace ConsoleApp2
                         count_accounts++;
                         Array.Resize(ref id_accounts, count_accounts);
                         Array.Resize(ref price_accounts, count_accounts);
-                        id_accounts[count_accounts - 1] = worst_stroki[i - 16];
+                        id_accounts[count_accounts - 1] = worst_stroki[i - 17];
                         price_accounts[count_accounts - 1] = worst_stroki[i - 10];
                         
                     }
