@@ -9,15 +9,15 @@ namespace ConsoleApp2
 {
     internal class LogError
     {
-        public static string path = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-        public LogError() 
+        string path = string.Empty;
+        public LogError(string path) 
         {
-
+            this.path = path;
         }
 
-        public static void WriteLog(string error)
+        public void WriteLog(string error)
         {
-            System.IO.File.AppendAllText(path + "\\Logs.txt", $"{DateTime.Now}:  {error}\n");
+            System.IO.File.AppendAllText(path, $"{DateTime.Now}:  {error}\n");
         }
     }
 }

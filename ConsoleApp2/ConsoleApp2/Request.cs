@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http.Headers;
+using System.Reflection;
 
 namespace ConsoleApp2
 {
@@ -7,14 +8,16 @@ namespace ConsoleApp2
     {
 
         static HttpClientHandler httpClientHandler = new HttpClientHandler();
+        public static string path = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         public static async Task<string> MarketRequest()
         {
+            LogError log = new LogError(path + "\\Logs.txt");
             TelegramNotifications tg = new TelegramNotifications();
             try
             {
                 SetProxy();
 
-                string url = "https://lolz.market/steam/cs-go-prime?order_by=pdate_to_down_upload";
+                string url = "https://lolz.market/steam/cs2-prime?order_by=pdate_to_down_upload";
                 var client = new System.Net.Http.HttpClient();
                 client = new System.Net.Http.HttpClient(httpClientHandler, true);
 
@@ -38,7 +41,7 @@ namespace ConsoleApp2
                 return response.ToString();
                 
             }
-            catch (Exception ex) { LogError.WriteLog("Ошибка в методе MarketRequest  " + ex.Message); await MarketRequest(); return null; }
+            catch (Exception ex) { log.WriteLog("Ошибка в методе MarketRequest  " + ex.Message); await MarketRequest(); return null; }
 
             
 

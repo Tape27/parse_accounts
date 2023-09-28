@@ -1,12 +1,16 @@
-﻿using System.Net;
+﻿using System.IO;
+using System.Net;
+using System.Reflection;
 
 namespace ConsoleApp2
 {
     internal class TelegramNotifications
     {
         private static string token = "6632750876:AAGxffynJjL0251teohIj_d1p6-ZSwHkSA0";
-
+        public static string path = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+        LogError log = new LogError(path + "\\Logs.txt");
         public int maxPrice = -1;
+
         public TelegramNotifications()
         {
             
@@ -42,7 +46,7 @@ namespace ConsoleApp2
                 var reader = new StreamReader(response.GetResponseStream());
                 var html = reader.ReadToEnd();
             }
-            catch (Exception ex) { LogError.WriteLog("Не смог отправить сообщение в телеграм, повторная отправка " + ex.Message); await SendAccount(id, price); }
+            catch (Exception ex) { log.WriteLog("Не смог отправить сообщение в телеграм, повторная отправка " + ex.Message); await SendAccount(id, price); }
 
         }
         public async Task SendError(string error)
@@ -70,7 +74,7 @@ namespace ConsoleApp2
                 var reader = new StreamReader(response.GetResponseStream());
                 var html = reader.ReadToEnd();
             }
-            catch (Exception ex) { LogError.WriteLog("Не смог отправить сообщение в телеграм, повторная отправка " + ex.Message); await SendError(error); }
+            catch (Exception ex) { log.WriteLog("Не смог отправить сообщение в телеграм, повторная отправка " + ex.Message); await SendError(error); }
         }
     }
 

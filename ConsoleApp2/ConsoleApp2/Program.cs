@@ -6,23 +6,24 @@ namespace ConsoleApp2
     {
         public static string path = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
-        public static Dictionary<int, int> load_accounts = new Dictionary<int, int>();
+        public static Dictionary<int, int> loadAccounts = new Dictionary<int, int>();
 
         public static async Task Main()
         {
-            await Start();
+            await StartAsync();
         }
-        public static async Task Start()
+        public static async Task StartAsync()
         {
             int countIterations = 0;
-            bool loadbase = false;
+            bool loadBase = false;
             ParsingLolzHtml parsing = new ParsingLolzHtml();
-            TelegramNotifications tg = new TelegramNotifications(400);
+            TelegramNotifications telegram = new TelegramNotifications(400);
 
             while (true)
             {
+                Thread.Sleep(5000);
                 countIterations++;
-                Console.WriteLine(DateTime.Now + ":  " +countIterations);
+                Console.WriteLine(DateTime.Now + ":  " + countIterations);
 
                 string html = await Request.MarketRequest();
                 if (html == null) { continue; }
@@ -33,15 +34,15 @@ namespace ConsoleApp2
 
                 foreach (var account in accounts)
                 {
-                    if (loadbase == false) { load_accounts = accounts; loadbase = true; break; }
+                    if (loadBase == false) { loadAccounts = accounts; loadBase = true; break; }
 
-                    if (!load_accounts.ContainsKey(account.Key))
+                    if (!loadAccounts.ContainsKey(account.Key))
                     {
-                        load_accounts.Add(account.Key, account.Value);
-                        await tg.SendAccount(account.Key, account.Value);
+                        loadAccounts.Add(account.Key, account.Value);
+                        await telegram.SendAccount(account.Key, account.Value);
                     }
                 }
-                if (countIterations == 1) { await tg.SendError("Начал работу!"); }
+                if (countIterations == 1) { await telegram.SendError("Начал работу!"); }
             }
 
         }

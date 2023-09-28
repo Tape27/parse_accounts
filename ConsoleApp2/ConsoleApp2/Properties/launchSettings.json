@@ -2,7 +2,7 @@
   "profiles": {
     "ConsoleApp2": {
       "commandName": "Project",
-      "workingDirectory": "C:\\Program Files\\Docker"
+      "workingDirectory": "C:\\Users\\profi\\source\\repos\\ConsoleApp2\\ConsoleApp2\\bin\\Debug\\net6.0"
     },
     "WSL": {
       "commandName": "WSL2",
